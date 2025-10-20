@@ -328,7 +328,7 @@ internal sealed class Options
     public List<string> Symbols { get; } = new() { "ES.FUT" };
     public string Schema { get; set; } = "mbp-1";
     public string StypeIn { get; set; } = "parent";
-    public bool RequestSnapshot { get; set; } = true;
+    public bool RequestSnapshot { get; set; }
     public string? Start { get; set; }
     public string? Gateway { get; set; }
     public int Port { get; set; } = 13000;
@@ -433,7 +433,7 @@ internal sealed class Options
             "  --symbols <list>            Comma-separated symbols to request (default ES.FUT).\n" +
             "  --schema <name>             Schema to request (default mbp-1).\n" +
             "  --stype-in <stype>          Input symbology type (default parent).\n" +
-            "  --snapshot / --no-snapshot  Request an initial snapshot (default snapshot).\n" +
+            "  --snapshot / --no-snapshot  Request an initial snapshot (default no snapshot).\n" +
             "  --start <iso8601>           Optional historical replay start time.\n" +
             "  --gateway <host>            Override the live gateway hostname.\n" +
             "  --port <number>            Override the live gateway port (default 13000).\n" +

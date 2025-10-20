@@ -76,5 +76,8 @@ The sample performs the following steps:
 Additional flags let you request snapshots (`--snapshot/--no-snapshot`), replay
 from a historical start time (`--start`), change the input symbology type,
 extend the user agent string, or adjust the number of printed quote updates.
+Snapshots are disabled by default because not every schema supports them (for
+example, `mbp-1`). Enable `--snapshot` only when the target schema supports an
+initial replay.
 Environment variable `DATABENTO_API_KEY` is used automatically when `--api-key`
 is omitted.【F:examples/csharp/LiveQuotesSample/Program.cs†L18-L31】【F:examples/csharp/LiveQuotesSample/Program.cs†L343-L416】
