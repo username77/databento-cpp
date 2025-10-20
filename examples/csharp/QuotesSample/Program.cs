@@ -15,22 +15,30 @@ internal static class Program
     private const string DefaultStart = "2024-05-01T13:30:00Z";
     private const string DefaultEnd = "2024-05-01T13:31:00Z";
     private const string DefaultLimit = "50";
+    private const string DefaultSchema = "mbp-1";
+    private const string DefaultStypeIn = "parent";
+    private const string DefaultStypeOut = "instrument_id";
 
     private static async Task<int> Main(string[] args)
     {
-        var apiKey = Environment.GetEnvironmentVariable("DATABENTO_API_KEY");
+        var options = ParseArgs(args);
+
+        var apiKey = options.GetValueOrDefault("api-key") ??
+                     Environment.GetEnvironmentVariable("DATABENTO_API_KEY");
         if (string.IsNullOrWhiteSpace(apiKey))
         {
-            Console.Error.WriteLine("Set the DATABENTO_API_KEY environment variable to your Databento API key.");
+            Console.Error.WriteLine("Pass --api-key or set the DATABENTO_API_KEY environment variable.");
             return 1;
         }
 
-        var options = ParseArgs(args);
         var dataset = options.GetValueOrDefault("dataset", DefaultDataset);
         var symbol = options.GetValueOrDefault("symbol", DefaultSymbol);
         var start = options.GetValueOrDefault("start", DefaultStart);
         var end = options.GetValueOrDefault("end", DefaultEnd);
         var limit = options.GetValueOrDefault("limit", DefaultLimit);
+        var schema = options.GetValueOrDefault("schema", DefaultSchema);
+        var stypeIn = options.GetValueOrDefault("stype-in", DefaultStypeIn);
+        var stypeOut = options.GetValueOrDefault("stype-out", DefaultStypeOut);
 
         using var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.Authorization = BuildBasicAuthHeader(apiKey);
@@ -41,9 +49,9 @@ internal static class Program
         {
             ["dataset"] = dataset,
             ["symbols"] = symbol,
-            ["schema"] = "mbp-1",
-            ["stype_in"] = "parent",
-            ["stype_out"] = "instrument_id",
+            ["schema"] = schema,
+            ["stype_in"] = stypeIn,
+            ["stype_out"] = stypeOut,
             ["start"] = start,
             ["end"] = end,
             ["encoding"] = "csv",
