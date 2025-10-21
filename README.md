@@ -159,6 +159,12 @@ To run this program, set the `DATABENTO_API_KEY` environment variable with an ac
 Additional example standalone executables are provided in the [`example`](./example) directory.
 These examples can be compiled by enabling the cmake option `DATABENTO_ENABLE_EXAMPLES` with `-DDATABENTO_ENABLE_EXAMPLES=1` during the configure step.
 
+### .NET interop (Windows)
+
+A sample Visual Studio solution that wraps the native library for consumption from .NET (C#) lives under [`wrappers/cpp_cli`](./wrappers/cpp_cli/README.md).
+The wrapper project builds a C++/CLI DLL targeting both `net8.0-windows` and `net9.0-windows`, and the accompanying demo application shows how to stream live trades from C#.
+Review the local README in that directory for build instructions and dependency configuration.
+
 ## Documentation
 
 You can find more detailed examples and the full API documentation on the [Databento doc site](https://databento.com/docs/quickstart?historical=cpp&live=cpp).

@@ -1,0 +1,22 @@
+# Visual Studio user-specific files
+*.user
+*.suo
+*.VC.db
+*.opendb
+# Build directories
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+# Binary outputs
+*.dll
+*.lib
+*.pdb
+*.obj
+*.ipch
+*.log
+*.tlog
+*.lastbuildstate
+*.cache
+*.vcxproj.user
+*.csproj.user
