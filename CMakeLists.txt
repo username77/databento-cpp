@@ -258,6 +258,33 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 verbose_message("Project is now aliased as ${PROJECT_NAME}::${PROJECT_NAME}.")
 
 #
+# C ABI shim for P/Invoke consumers
+#
+
+add_library(
+  ${PROJECT_NAME}_c
+  SHARED
+  bindings/c/src/databento_c.cpp
+)
+
+target_link_libraries(${PROJECT_NAME}_c PUBLIC ${PROJECT_NAME}::${PROJECT_NAME})
+target_include_directories(
+  ${PROJECT_NAME}_c
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bindings/c/include>
+    $<INSTALL_INTERFACE:include>
+)
+target_compile_features(${PROJECT_NAME}_c PUBLIC cxx_std_17)
+set_target_properties(${PROJECT_NAME}_c PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(
+  ${PROJECT_NAME}_c
+  PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}"
+)
+
+#
 # Format the project using the `clang-format` target (i.e: cmake --build build --target clang-format)
 #
 
@@ -267,7 +294,7 @@ add_clang_format_target()
 # Install library for easy downstream inclusion
 #
 
-set(targets ${PROJECT_NAME})
+set(targets ${PROJECT_NAME} ${PROJECT_NAME}_c)
 if(NOT ${PROJECT_NAME_UPPERCASE}_USE_EXTERNAL_JSON)
   list(APPEND targets nlohmann_json)
 endif()
@@ -317,6 +344,7 @@ install(
   FILES
     ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/system.hpp
     ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/version.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bindings/c/include/${PROJECT_NAME}/c_api.h
   DESTINATION
     ${INCLUDE_INSTALL_DIR}
 )
