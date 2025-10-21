@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DatabentoWrapper">
+      <HintPath>..\DatabentoWrapper\bin\$(Configuration)\$(TargetFramework)\DatabentoWrapper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
